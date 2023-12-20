@@ -19,8 +19,18 @@ export function flow(...fns: Array<(...args: Array<any>) => any>) {
  * Handy for automatic data typing
  */
 export function pipe<A, B>(a: A, fb: (a: A) => B): B;
+export function pipe<A, B, C>(a: A, fb: (a: A) => B, fc: (a: B) => C): C;
+export function pipe<A, B, C, D>(a: A, fb: (a: A) => B, fc: (a: B) => C, fd: (a: C) => D): D;
+export function pipe<A, B, C, D, E>(
+    a: A,
+    fb: (a: A) => B,
+    fc: (a: B) => C,
+    fd: (a: C) => D,
+    fe: (a: D) => E,
+): E;
 export function pipe(a: any, ...fns: Array<(...args: Array<any>) => any>) {
 
+  return fns.reduce((acc, fn) => fn(acc), a)
 }
 
 export type Predicate<A> = (a: A) => boolean
